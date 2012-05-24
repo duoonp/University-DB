@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}База данных студентов и групп{% endblock %}
+{% block head %}База данных студентов и групп{% endblock %}
+{% block content %}
+    {% if user.username %}
+      <p>Добро пожаловать, {{ user.username }}!</br>
+        Вы можете редактировать данные студентов и групп.</p>
+        
+    <p>
+    <a href="/students/">Студенты</a> <a href="/students/add/">[+]</a> </p>
+    <p>
+    <a href="/groups/">Группы</a> <a href="/groups/add/">[+]</a> </p>
+    {% else %}
+      <p>Добро пожаловать!</br>
+        Пожалуйста, <a href="/login/">войдите<a/>
+        чтобы редактировать данные студентов и групп.</p>
+        
+    <p>
+    <a href="/students/">Студенты</a> </p> 
+    <p>
+    <a href="/groups/">Группы</a> </p>
+    {% endif %}
+    
+    
+ {% endblock %}

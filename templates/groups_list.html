@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Группы{% endblock %}
+{% block head %}Список групп{% endblock %}
+
+{% block content %}
+{% if groups %}
+  <table class="groups">
+      <tr>
+          <th>Группа</th>
+          <th>Студентов</th>
+          <th>Староста</th>
+          {% if user.username %}
+          <th>Действия</th>
+          {% endif %}
+      </tr>
+    {% for group in groups %}
+    <tr>
+        <td><a href="/group/{{ group.title|urlencode }}/">
+               {{ group.title }}</a></td>
+        <td class="ac">{{ group.student.count }}</td>
+        
+        {% if group.elder %}
+            <td>{{ group.elder }}</td>
+        {% else %}
+            <td>Нет старосты</td>
+        {% endif %}
+        
+        {% if user.username %}
+            <td><a href="/edit/group/{{ group.id|urlencode }}/">Изменить</a> 
+              | <a href="/delete/group/{{ group.id|urlencode }}/">Удалить</a></td>
+       {% endif %}
+    {% endfor %}
+     </tr>
+{% else %}
+  <p>Еще не созданно ни одной группы.</p>
+{% endif %}
+
+{% if user.username %}
+    {% if group_title %}
+        <a href="/groups/add/"> Добавить новую группу</a>
+    {% endif %}
+{% endif %}
+
+<a href="/students/">Список студентов</a>
+
+{% endblock %}

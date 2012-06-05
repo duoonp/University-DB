@@ -4,11 +4,14 @@
 <head>
         <title>База данных студентов | 
           {% block title %}{% endblock %}</title>
-          
-
-          {% block external %}{% endblock %}
+    
 </head>
+
+          
 <body>
+
+   {% block external %}{% endblock %}
+
   <div id="nav">
    <a href="/">домой</a> |
    {% if user.is_authenticated %}
@@ -20,6 +23,8 @@
   
   
   <h1>{% block head %}{% endblock %}</h1>
+  
+
   {% block content %}{% endblock %}
 </body>
 </html>

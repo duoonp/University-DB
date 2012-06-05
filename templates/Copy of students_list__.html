@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Студенты{% endblock %}
+
+{% block head %}
+    {% if group_title %}
+        Группа {{ group_title }}
+    {% else %}
+        Список студентов
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if students %}
+        <table class="students">
+            <tr>
+                <th>ФИО</th>
+                <th>Дата рождения</th>
+                <th>№ студ. билета</th>
+                {% if not group_title %}
+                <th>Группа</th>
+                {% endif %}
+                {% if user.username %}
+                <th>Действия</th>
+                {% endif %}
+            </tr>
+    {% for student in students %}
+            <td>{{ student.name }}</td>
+            <td>{{ student.birthday }}</td>
+            <td>{{ student.number }}</td>
+            {% if not group_title %}
+                {% if student.group %}
+                    <td><a href="/group/{{ student.group|urlencode }}/">
+                        {{ student.group }}</a></td>
+                {% else %}
+                    <td>Не указана</td>
+                {% endif %}
+            {% endif %}
+            
+            {% if user.username %}
+                <td><a href="/edit/student/{{ student.id|urlencode }}/">Изменить</a> 
+                  | <a href="/delete/student/{{ student.id|urlencode }}/">Удалить</a> </td>
+            {% endif %}
+            
+        <tr/>
+     {% endfor %}
+     <p>Всего {{ students.count }} студентов</p> 
+{% else %}
+  <p>Нет студентов.</p>
+{% endif %}
+
+{% if user.username %}
+    {% if group_title %}
+        <a href="/students/add/{{ group_title|urlencode }}/"> Добавить студента в группу </a>
+    {% else %}
+        <a href="/students/add/"> Добавить студента</a>
+    {% endif %}
+{% endif %}
+
+<p><a href="/groups/">Список групп</a></p>
+
+{% endblock %}

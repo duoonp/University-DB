@@ -15,8 +15,7 @@
       </tr>
     {% for group in groups %}
     <tr>
-        <td><a href="/group/{{ group.title|urlencode }}/">
-               {{ group.title }}</a></td>
+        <td><a href="/group/{{ group.title|urlencode }}/">{{ group.title }}</a></td>
         <td class="ac">{{ group.student.count }}</td>
         
         {% if group.elder %}

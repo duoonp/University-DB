@@ -70,20 +70,24 @@ def students_list(request, group_title=None):
     if group_title:
         group = get_object_or_404(Group, title=group_title)
         students = Student.objects.filter(group=group)
+        variables = RequestContext(request, {
+            'students': students,
+            'group_title': group_title
+        })
+        return render_to_response('students_group_list.html', variables)
     else:
         students = Student.objects.order_by('name')
-    variables = RequestContext(request, {
-        'students': students,
-        'group_title': group_title
-    })
-    return render_to_response('students_list.html', variables)
+        variables = RequestContext(request, {
+            'students': students,
+        })
+        return render_to_response('students_all_list.html', variables)
 
 def groups_list(request):
     groups = Group.objects.order_by('title')
     variables = RequestContext(request, {
         'groups': groups,
     })
-    return render_to_response('groups_list.html', variables)
+    return render_to_response('all_groups_list.html', variables)
 
 def edit_data(request,  instance, instance_id):
     if instance == "student":
